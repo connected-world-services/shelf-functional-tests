@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+requiredEnv=(
+    SHELF_AUTH_TOKEN
+    SHELF_URI
+)
+
+missing=()
+
+for env in "${requiredEnv[@]}"; do
+    if [[ -z "${!env}" ]]; then
+        missing[${#missing[@]}]="$env"
+    fi
+done
+
+if [[ "${#missing}" -eq 0 ]]; then
+    jasmine "$@"
+
+    if command -v eslint; then
+        eslint .
+    fi
+else
+    echo "Missing the following environment variables: ${missing[*]}"
+fi

@@ -1,0 +1,33 @@
+{
+    "name": "shelf-functional-tests",
+    "version": "1.0.0",
+    "description": "Tests that can be run on a shelf instance that would functionally test it front to back.",
+    "scripts": {
+        "test": "script/test",
+        "fast-test": "script/fast-test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/connected-world-services/shelf-functional-tests.git"
+    },
+    "keywords": [],
+    "author": "Kyle Long <uilwen@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/connected-world-services/shelf-functional-tests/issues"
+    },
+    "homepage": "https://github.com/connected-world-services/shelf-functional-tests#readme",
+    "devDependencies": {
+        "eslint": "~3.13.1"
+    },
+    "dependencies": {
+        "debug": "~2.6.0",
+        "dizzy": "~2.2.1",
+        "dizzy-promisify-bluebird": "~1.0.3",
+        "jasmine": "~2.5.2",
+        "jasmine-test-helpers": "~1.1.2",
+        "log": "~1.4.0",
+        "shelf-lib": "~2.0.2",
+        "urijs": "^1.18.2"
+    }
+}
