@@ -65,7 +65,6 @@ module.exports = (config, fsAsync, logger, path, shelfLib, unique, URI) => {
         }).then((artifactPath) => {
             artifactPath = path.join(artifactPath, path.basename(file));
             logger.debug(`Artifact Path: ${artifactPath}`);
-
             artifact = reference.initArtifact(artifactPath);
         }).then(() => {
             logger.debug(`Uploading artifact to ${artifact.uri}`);

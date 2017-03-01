@@ -1,6 +1,9 @@
 "use strict";
 var config, container, cryptoAsync, fileCreator, fsAsync, logger;
 
+// 30 minutes
+const testTimeout = 30 * 60 * 1000;
+
 container = require("./helpers/lib/container")();
 logger = container.resolve("logger");
 fsAsync = container.resolve("fsAsync");
@@ -16,12 +19,12 @@ config = container.resolve("config");
  * @return {Promise.<string>}
  */
 function loadLocalMd5Hash(file) {
-    var hash, promise, stream;
+    var hash, stream;
 
     stream = fsAsync.createReadStream(file);
     hash = cryptoAsync.createHash("md5");
 
-    promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         stream.on("readable", () => {
             const data = stream.read();
 
@@ -35,8 +38,6 @@ function loadLocalMd5Hash(file) {
             reject(error);
         });
     });
-
-    return promise;
 }
 
 describe("LARGE_ARTIFACT_UPLOAD", () => {
@@ -44,9 +45,7 @@ describe("LARGE_ARTIFACT_UPLOAD", () => {
 
     beforeEach(() => {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-
-        // 30 minutes
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 30 * 60 * 1000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = testTimeout;
     });
     it("will successfully upload.", () => {
         var error, fileName, remoteMd5Hash;
