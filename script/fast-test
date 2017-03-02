@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-cd "${0%/*}" || exit $?
-./test --filter='^(?!LARGE_ARTIFACT_UPLOAD).*$'
+
+declare currentDir
+
+currentDir="${0%/*}"
+"$currentDir/test" --filter='^(?!LARGE_ARTIFACT_UPLOAD).*$' "$@"

@@ -20,6 +20,7 @@ module.exports = () => {
         fileCreator: "./file-creator",
         logger: "./logger",
         manager: "./manager",
+        Space: "./space",
         unique: "./unique"
     }).fromModule(__dirname).asFactory().cached();
     container.registerBulk({
