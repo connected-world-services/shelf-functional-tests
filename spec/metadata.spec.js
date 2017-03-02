@@ -9,8 +9,8 @@ describe("METADATA", () => {
         });
     });
     beforeEach(() => {
-        return space.uploadArtifact("LOL").then((a) => {
-            artifact = a;
+        return space.uploadArtifact("LOL").then((testArtifact) => {
+            artifact = testArtifact;
         });
     });
     it("can be uploaded and downloaded.", () => {
@@ -31,7 +31,7 @@ describe("METADATA", () => {
                 "artifactPath",
                 "artifactName"
             ].forEach((prop) => {
-                expect(allMetadata[prop]).not.toBe();
+                expect(allMetadata[prop]).toBeDefined();
             });
         });
     });

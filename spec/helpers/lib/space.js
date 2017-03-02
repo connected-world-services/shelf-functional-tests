@@ -4,8 +4,9 @@ module.exports = (fsAsync, logger, path, unique) => {
     /**
      * This class exists to organize all artifacts within a
      * certain test. For example, if I did a concurrency test
-     * where I uploaded many artifacts (or uploaded many metadatas)
-     * they would all be contained within the same "testPath".
+     * where I uploaded many artifacts or make many metadata
+     * requests they would all be contained within the same
+     * "testPath".
      */
     class Space {
         /**
@@ -24,6 +25,7 @@ module.exports = (fsAsync, logger, path, unique) => {
             this.artifactList = [];
         }
 
+
         /**
          * Makes sure the file exists and is writable.
          *
@@ -39,6 +41,7 @@ module.exports = (fsAsync, logger, path, unique) => {
                 throw new Error(`File ${filePath} either doesn't exist or is not readable`);
             });
         }
+
 
         /**
          * Uploads the provided content as an artifact.
@@ -67,6 +70,7 @@ module.exports = (fsAsync, logger, path, unique) => {
                 return artifact;
             });
         }
+
 
         /**
          * @param {string} file A path to a file.
