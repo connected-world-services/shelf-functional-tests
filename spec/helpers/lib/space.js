@@ -6,18 +6,17 @@ module.exports = (fsAsync, logger, path, unique) => {
      * certain test. For example, if I did a concurrency test
      * where I uploaded many artifacts or make many metadata
      * requests they would all be contained within the same
-     * "testPath".
+     * "testPath". WARNING: Artifacts are immutable. Think carefully
+     * about the path you will use to run tests.
+     *
+     * Below I will parameterize the part of the URI which is the test path.
+     *
+     *  https://api.shelf-qa.cwscloud.net/test/artifact/<testPath>
      */
     class Space {
         /**
-         * testPath is the path to a directory that all artifacts will
-         * be uploaded to for this Space. Below I will parameterize the
-         * part of the URI which is the test path.
-         *
-         *  https://api.shelf-qa.cwscloud.net/test/artifact/<testPath>
-         *
          * @param {shelfLib~Reference} reference
-         * @param {string} testPath
+         * @param {string} testPath See class description for details.
          */
         constructor(reference, testPath) {
             this.reference = reference;
