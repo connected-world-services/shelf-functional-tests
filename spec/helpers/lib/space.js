@@ -10,8 +10,8 @@ module.exports = (fsAsync, logger, path, unique) => {
      */
     class Space {
         /**
-         * testPath is the path to a directory that this Space
-         * will use for testing. Below I will parameterize the
+         * testPath is the path to a directory that all artifacts will
+         * be uploaded to for this Space. Below I will parameterize the
          * part of the URI which is the test path.
          *
          *  https://api.shelf-qa.cwscloud.net/test/artifact/<testPath>
