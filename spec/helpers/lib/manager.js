@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = (config, fsAsync, logger, path, shelfLib, unique, URI) => {
+module.exports = (config, logger, path, shelfLib, Space, unique, URI) => {
     var hostPrefix, pathParts, pathPrefix, reference, shelf, uri;
 
     uri = new URI(config.uri);
@@ -28,56 +28,52 @@ module.exports = (config, fsAsync, logger, path, shelfLib, unique, URI) => {
      * @return {Promise.<string>}
      */
     function buildPath() {
-        return unique().then((uniqueId) => {
+        return unique.createWithDate().then((uniqueId) => {
             return path.join(pathPrefix, uniqueId);
         });
     }
 
 
     /**
-     * Makes sure the file exists and is writable.
+     * Creates a Space instance.
      *
-     * @param {string} filePath
-     * @return {Promise.<undefined>}
+     * @return {Promise.<shelfFunctionalTests~Space>}
      */
-    function checkFile(filePath) {
-       /**
-         * fs.constants was added in v6.1. Adding this to make it more
-         * backwards compatible.
-         */
-        return fsAsync.accessAsync(filePath, (fsAsync.constants || fsAsync).R_OK).then(null, () => {
-            throw new Error(`File ${filePath} either doesn't exist or is not readable`);
+    function createSpace() {
+        return buildPath().then((testPath) => {
+            return new Space(reference, testPath);
         });
     }
 
 
     /**
-     * @param {string} file A path to a file.
-     * @return {Promise.<shelfLib~Artifact>}
+     * @see shelfFunctionalTests~Space.uploadArtifact
+     *
+     * @param {string} content
+     * @return {shelfLib~Artifact}
+     */
+    function uploadArtifact(content) {
+        return createSpace().then((space) => {
+            return space.uploadArtifact(content);
+        });
+    }
+
+
+    /**
+     * @see shelfFunctionalTests~Space.uploadArtifactFromFile
+     *
+     * @param {string} file
+     * @return {shelfLib~Artifact}
      */
     function uploadArtifactFromFile(file) {
-        var artifact;
-
-        return checkFile(file).then(() => {
-            logger.debug(`Building path for file ${file}`);
-
-            return buildPath();
-        }).then((artifactPath) => {
-            artifactPath = path.join(artifactPath, path.basename(file));
-            logger.debug(`Artifact Path: ${artifactPath}`);
-            artifact = reference.initArtifact(artifactPath);
-        }).then(() => {
-            logger.debug(`Uploading artifact to ${artifact.uri}`);
-
-            return artifact.uploadFromFile(file);
-        }).then((loc) => {
-            logger.debug(`Successfuly uploaded artifact to ${reference.buildUrl(loc)}`);
-
-            return artifact;
+        return createSpace().then((space) => {
+            return space.uploadArtifactFromFile(file);
         });
     }
 
     return {
+        createSpace,
+        uploadArtifact,
         uploadArtifactFromFile
     };
 };
