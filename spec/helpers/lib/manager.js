@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = (config, logger, path, shelfLib, Space, unique, URI) => {
-    var hostPrefix, pathParts, pathPrefix, reference, shelf, uri;
+module.exports = (config, container, logger, path, shelfLib, Space, unique, URI) => {
+    var hostPrefix, pathParts, pathPrefix, reference, shelf, shelfLibOptions, uri;
 
     uri = new URI(config.uri);
     hostPrefix = `${uri.protocol()}://${uri.hostname()}`;
@@ -12,13 +12,18 @@ module.exports = (config, logger, path, shelfLib, Space, unique, URI) => {
 
     pathParts = uri.path().split("/");
     shelf = pathParts[1];
+    shelfLibOptions = {};
+
+    if (config.debug) {
+        shelfLibOptions.logLevel = "debug";
+    }
 
     /**
      * The parts will be ["", "<shelf>", "artifact", "the", "rest"].
      * I want everything after "artifact".
      */
     pathPrefix = pathParts.slice(3).join("/");
-    reference = shelfLib(hostPrefix).initReference(shelf, config.token);
+    reference = shelfLib(hostPrefix, shelfLibOptions).initReference(shelf, config.token);
 
 
     /**
@@ -72,8 +77,10 @@ module.exports = (config, logger, path, shelfLib, Space, unique, URI) => {
     }
 
     return {
+        container,
         createSpace,
         uploadArtifact,
-        uploadArtifactFromFile
+        uploadArtifactFromFile,
+        reference
     };
 };

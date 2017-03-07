@@ -24,12 +24,13 @@ Installation
 Configuration
 -------------
 
-| Name                    | Type   | Description                                                                                                                                                                                                                | Default |
-|-------------------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| `DEBUG`                 | bool   | Turns on debug logging for additional information.                                                                                                                                                                         | false   |
-| `SHELF_LARGE_FILE_SIZE` | int    | The number of MB that you would like the large file upload test to use.                                                                                                                                                    | 1000    |
-| `SHELF_AUTH_TOKEN`      | string | The token required in the Authorization header to [Shelf].                                                                                                                                                                 | -       |
-| `SHELF_URI`             | string | The full URI to where you would like the tests to upload to. This should include the protocol, host and path to the testing directory. For example `https://api.shelf-qa.cwscloud.net/test-shelf/artifact/path/to/test/in` | -       |
+| Name                        | Type   | Description                                                                                                                                                                                                                | Default |
+|-----------------------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| `DEBUG`                     | bool   | Turns on debug logging for additional information.                                                                                                                                                                         | false   |
+| `SHELF_CONCURRENT_REQUESTS` | int    | There are tests that make concurrent requests. When this happens it will use this value to figure out how many should be run at once.                                                                                      | 10      |
+| `SHELF_LARGE_FILE_SIZE`     | int    | The number of MB that you would like the large file upload test to use.                                                                                                                                                    | 1000    |
+| `SHELF_AUTH_TOKEN`          | string | The token required in the Authorization header to [Shelf].                                                                                                                                                                 | -       |
+| `SHELF_URI`                 | string | The full URI to where you would like the tests to upload to. This should include the protocol, host and path to the testing directory. For example `https://api.shelf-qa.cwscloud.net/test-shelf/artifact/path/to/test/in` | -       |
 
 
 Running the Tests
@@ -46,6 +47,14 @@ The above will run all tests.
     npm run fast-test
 
 The above will run all tests that are quick. This excludes the test that uploads a very large file.
+
+Below are a few additional examples.
+
+    # Run the full suite of "CONCURRENCY" tests.
+    npm run test -- --filter="CONCURRENCY"
+
+    # run a specific test which happens to be part of the "CONCURRENCY" suite.
+    npm run test -- --filter="can be handled when making similar requests"
 
 
 License

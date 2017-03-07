@@ -6,6 +6,7 @@ module.exports = () => {
     Dizzy = require("dizzy");
     require("dizzy-promisify-bluebird")(Dizzy);
     container = new Dizzy();
+    container.register("container", container);
     container.register("config", "./config").fromModule(__dirname);
     container.register("programName", "shelf-functional-tests");
     container.registerBulk({

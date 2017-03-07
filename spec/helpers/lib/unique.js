@@ -2,12 +2,12 @@
 
 module.exports = (cryptoAsync) => {
     /**
-     * Creates a random string of 10 hex characters.
+     * Creates a random string of 20 hex characters.
      *
      * @return {Promise.<string>}
      */
     function create() {
-        return cryptoAsync.randomBytesAsync(5).then((buffer) => {
+        return cryptoAsync.randomBytesAsync(10).then((buffer) => {
             return buffer.toString("hex");
         });
     }

@@ -41,6 +41,15 @@ module.exports = (fsAsync, logger, path, unique) => {
             });
         }
 
+        /**
+         * Defaulted to the path that is used by this Space.
+         *
+         * @return {shelfLib~ArtifactShelf}
+         */
+        createSearch() {
+            return this.reference.initSearch(this.testPath);
+        }
+
 
         /**
          * Uploads the provided content as an artifact.
@@ -59,11 +68,11 @@ module.exports = (fsAsync, logger, path, unique) => {
 
                 return artifact;
             }).then(() => {
-                logger.debug(`Uploading artifact to ${artifact.uri}`);
+                logger.info(`Uploading artifact to ${artifact.uri}`);
 
                 return artifact.upload(content);
             }).then((loc) => {
-                logger.debug(`Successfuly uploaded artifact to ${this.reference.buildUrl(loc)}`);
+                logger.info(`Successfuly uploaded artifact to ${this.reference.buildUrl(loc)}`);
                 this.artifactList.push(artifact);
 
                 return artifact;
@@ -82,14 +91,14 @@ module.exports = (fsAsync, logger, path, unique) => {
                 var artifactPath;
 
                 artifactPath = path.join(this.testPath, path.basename(file));
-                logger.debug(`Artifact Path: ${artifactPath}`);
+                logger.info(`Artifact Path: ${artifactPath}`);
                 artifact = this.reference.initArtifact(artifactPath);
             }).then(() => {
-                logger.debug(`Uploading artifact to ${artifact.uri}`);
+                logger.info(`Uploading artifact to ${artifact.uri}`);
 
                 return artifact.uploadFromFile(file);
             }).then((loc) => {
-                logger.debug(`Successfuly uploaded artifact to ${this.reference.buildUrl(loc)}`);
+                logger.info(`Successfuly uploaded artifact to ${this.reference.buildUrl(loc)}`);
                 this.artifactList.push(artifact);
 
                 return artifact;
