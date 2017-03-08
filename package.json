@@ -27,7 +27,7 @@
         "jasmine": "~2.5.2",
         "jasmine-test-helpers": "~1.2.0",
         "log": "~1.4.0",
-        "shelf-lib": "~2.0.2",
+        "shelf-lib": "~2.1.0",
         "urijs": "^1.18.2"
     }
 }

@@ -51,23 +51,23 @@ describe("LARGE_ARTIFACT_UPLOAD", () => {
         var error, fileName, remoteMd5Hash;
 
         fileName = "large.txt";
-        logger.debug(`Creating large file of "${config.largeFileSize}MB"`);
+        logger.info(`Creating large file of "${config.largeFileSize}MB"`);
 
         return fileCreator.create(fileName, config.largeFileSize).then(() => {
             return jasmine.shelf.uploadArtifactFromFile(fileName);
         }).then((artifact) => {
             logger.info(`Successfuly uploaded "${artifact.uri}"`);
-            logger.debug("Getting remote md5Hash");
+            logger.info("Getting remote md5Hash");
 
             return artifact.metadata.getProperty("md5Hash");
         }).then((md5HashProperty) => {
             remoteMd5Hash = md5HashProperty;
-            logger.debug("Got remote md5Hash %O", md5HashProperty);
-            logger.debug("Getting local md5Hash");
+            logger.info(`Got remote md5Hash ${JSON.stringify(md5HashProperty, null, 4)}`);
+            logger.info("Getting local md5Hash");
 
             return loadLocalMd5Hash(fileName);
         }).then((localMd5Hash) => {
-            logger.debug(`Got local md5Hash ${localMd5Hash}`);
+            logger.info(`Got local md5Hash ${localMd5Hash}`);
             expect(localMd5Hash).toEqual(remoteMd5Hash.value);
         }).then(null, (err) => {
             error = err;
