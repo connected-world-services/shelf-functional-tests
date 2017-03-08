@@ -22,16 +22,16 @@ config = container.resolve("config");
 function runConcurrent(createPromise, dataList) {
     var count, promise, promiseList;
 
-    count = 0;
     promiseList = [];
     dataList = dataList || [];
 
-    for (count; count < config.concurrentRequests; count += 1) {
+    for (count = 0; count < config.concurrentRequests; count += 1) {
         if (dataList.length) {
             promise = createPromise(dataList[count]);
         } else {
             promise = createPromise();
         }
+
         promiseList.push(promise);
     }
 
@@ -93,13 +93,12 @@ describe("CONCURRENCY", () => {
     it("can be handled when making different requests", () => {
         var count, logSearch, promise, promiseList, search;
 
-        count = 0;
         promiseList = [];
         logSearch = () => {
             logger.info(`Successfully searched for ${space.testPath}`);
         };
 
-        for (count; count < config.concurrentRequests; count += 1) {
+        for (count = 0; count < config.concurrentRequests; count += 1) {
             if (count % 2) {
                 promise = space.uploadArtifact(artifactContent).then((artifact) => {
                     return artifact.metadata.updateProperty(metadatum.name, metadatum);

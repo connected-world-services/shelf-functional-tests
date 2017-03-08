@@ -36,10 +36,8 @@ describe("ARTIFACT_AVAILABILITY", () => {
     function createUploadDownloadChain() {
         var count, promise;
 
-        count = 1;
-
         promise = runUploadAndDownload();
-        for (count; count < 5; count += 1) {
+        for (count = 1; count < 5; count += 1) {
             promise = promise.then(() => {
                 return runUploadAndDownload();
             });
@@ -58,10 +56,9 @@ describe("ARTIFACT_AVAILABILITY", () => {
     it("should be available in parallel", () => {
         var count, promiseList;
 
-        count = 0;
         promiseList = [];
 
-        for (count; count < config.concurrentRequests; count += 1) {
+        for (count = 0; count < config.concurrentRequests; count += 1) {
             promiseList.push(createUploadDownloadChain());
         }
 
