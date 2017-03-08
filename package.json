@@ -24,6 +24,7 @@
         "debug": "~2.6.0",
         "dizzy": "~2.2.1",
         "dizzy-promisify-bluebird": "~1.0.3",
+        "http-link-header": "^0.7.0",
         "jasmine": "~2.5.2",
         "jasmine-test-helpers": "~1.2.0",
         "log": "~1.4.0",
