@@ -30,8 +30,7 @@ describe("SEARCH", () => {
     });
     it("can do a path search without criteria", () => {
         return search.search().then((results) => {
-            // Need to parse links and make sure my artifact is in there somewhere.
-            expect(results).toBeDefined();
+            expect(results).toEqual(jasmine.arrayContaining([testLink]));
         });
     });
     it("can do a root search without criteria", () => {
